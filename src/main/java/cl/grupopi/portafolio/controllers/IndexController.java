@@ -1,6 +1,7 @@
 package cl.grupopi.portafolio.controllers;
 
 import cl.grupopi.portafolio.models.Project;
+import cl.grupopi.portafolio.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class IndexController {
 
     @Value("${titulo.home}")
     private String homeTitle;
+
+    @Autowired
+    private ProjectService projectService;
 
     @GetMapping({"/index","","/home"})
     public String index(ModelMap modelMap){
