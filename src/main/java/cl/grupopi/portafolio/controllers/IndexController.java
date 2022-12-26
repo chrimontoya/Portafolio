@@ -1,6 +1,7 @@
 package cl.grupopi.portafolio.controllers;
 
 import cl.grupopi.portafolio.models.Project;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
