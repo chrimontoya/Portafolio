@@ -32,7 +32,7 @@
                 </li>
             </ul>
             <div class="ml-auto">
-                <a>Login</a>
+                <a href="#">Login</a>
             </div>
         </div>
     </nav>
@@ -47,18 +47,18 @@
         </div>
 
         <div class="col my-auto mx-auto">
-            <image class="img-fluid" style="width: 100%; height: 100%" th:src="@{/images/bg-home.jpg}"></image>
+            <image class="img-fluid rounded" style="width: 100%; height: 100%" th:src="@{/images/bg-home.jpg}"></image>
         </div>
 
     </div>
 
 
     <div class="row mx-auto bg-dark justify-content-center">
-        <h3 class="text-center mt-4"><strong>Participación en proyectos</strong></h3>
-        <div class="container m-5">
+        <h3 class="col-12 text-center mt-4 "><strong>Participación en proyectos</strong></h3>
+        <div class="container m-5 col-12">
 
             <div class="row justify-content-center">
-                <div class="col-3 text-center">
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
                     <div class="card">
                         <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
                         <div class="card-body">
@@ -67,8 +67,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-3 text-center">
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
                     <div class="card">
                         <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
                         <div class="card-body">
@@ -77,8 +76,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-3 text-center">
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
                     <div class="card">
                         <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
                         <div class="card-body">
@@ -93,37 +91,78 @@
 
     </div>
 
-    <!--Contact-->
-    <div class="row col-11 h-75 mx-auto">
+    <!--skils-->
+    <div class="row mx-auto bg-info justify-content-center">
+        <h3 class="col-12 text-center mt-4 "><strong>Habilidades</strong></h3>
+        <div class="container m-5 col-12">
 
-        <div class="col my-auto mx-auto">
-            <h3 class="col"><strong>tienes alguna idea en mente? :O</strong></h3>
-            <p class="col">Llena el formulario de contacto para que podamos trabajar juntos</p>
-        </div>
-
-        <div class="col my-auto mx-auto">
-
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2" placeholder="Nombre">
-
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2" placeholder="Correo">
-
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2" placeholder="Mensaje">
-
-            <div class="col">
-                <button class="btn btn-primary">Enviar</button>
+            <div class="row justify-content-center">
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
+                    <div class="card">
+                        <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
+                    <div class="card">
+                        <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2">
+                    <div class="card">
+                        <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
 
     </div>
 
     <!--About-->
-    <div class="bg-danger p-2">
-        algo
+    <div class="row mx-auto justify-content center h-75 bg-warning">
+        <div class="col text-center my-auto mx-auto">
+            <h3 class="col"><strong>Acerca de mí</strong></h3>
+            <p class="col">Profesional con 1 año de experiencia como desarrollador full stack, abordando rapidamente tecnologias de acuerdo al proyecto en participación, titulado como Analista bla bla</p>
+        </div>
+    </div>
+
+    <!--Contact-->
+    <div class="row col-11 h-50 mx-auto">
+
+        <div class="col text-center my-auto mx-auto">
+            <h3 class="col"><strong>tienes alguna idea en mente? :O</strong></h3>
+            <p class="col">Llena el formulario de contacto para que podamos trabajar juntos</p>
+        </div>
+
+        <div class="col text-center my-auto mx-auto">
+
+                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Nombre">
+
+                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Correo">
+
+                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Mensaje">
+
+                <button class="col col-sm-8 col-md-8 col-lg-6 my-2 btn btn-primary">Enviar</button>
+
+        </div>
+
     </div>
 
     <!--footer-->
     <div class="bg-dark py-2">
-        <h5 class="text-center">
+        <h5 class="text-center text-white">
             <strong>Copyright @ 2020 - Christian Montoya</strong>
         </h5>
     </div>
