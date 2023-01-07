@@ -1,7 +1,10 @@
 package cl.grupopi.portafolio.models;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component
 public class Project {
 
     private long idProject;

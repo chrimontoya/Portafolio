@@ -19,20 +19,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Projects</a>
+                    <a class="nav-link" href="#">Proyectos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Skills</a>
+                    <a class="nav-link" href="#">Habilidades</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Acerca de mí</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About me</a>
+                    <a class="nav-link" href="#">Contacto</a>
                 </li>
             </ul>
             <div class="ml-auto">
-                <a href="#">Login</a>
+                <a href="login">Login</a>
             </div>
         </div>
     </nav>
@@ -41,8 +41,8 @@
     <div class="row col-11 h-75 mx-auto">
 
         <div class="col my-auto">
-            <h3 class="col"><strong>Christian Montoya</strong></h3>
-            <p class="col">Soy Desarrollador Full-Stack titulado como Analista Programador y además estudiante de Ingeniería en Informática Duoc UC</p>
+            <h3 class="col"><strong th:text="${titulo}"></strong></h3>
+            <p class="col" th:text="${subTitle}"></p>
             <div class="col"><button class="btn btn-primary">Contact me</button></div>
         </div>
 
@@ -53,8 +53,9 @@
     </div>
 
 
-    <div class="row mx-auto bg-dark justify-content-center">
-        <h3 class="col-12 text-center mt-4 "><strong>Participación en proyectos</strong></h3>
+    <!---Proyectos-->
+    <div class="row mx-auto bg-dark justify-content-center" id="proyectos">
+        <h3 class="col-12 text-center mt-4 "><strong th:text="${sectionProjects}"></strong></h3>
         <div class="container m-5 col-12">
 
             <div class="row justify-content-center">
@@ -93,7 +94,7 @@
 
     <!--skils-->
     <div class="row mx-auto bg-info justify-content-center">
-        <h3 class="col-12 text-center mt-4 "><strong>Habilidades</strong></h3>
+        <h3 class="col-12 text-center mt-4 "><strong th:text="${sectionSkills}"></strong></h3>
         <div class="container m-5 col-12">
 
             <div class="row justify-content-center">
@@ -133,7 +134,7 @@
     <!--About-->
     <div class="row mx-auto justify-content center h-75 bg-warning">
         <div class="col text-center my-auto mx-auto">
-            <h3 class="col"><strong>Acerca de mí</strong></h3>
+            <h3 class="col"><strong th:text="${sectionInfo}"></strong></h3>
             <p class="col">Profesional con 1 año de experiencia como desarrollador full stack, abordando rapidamente tecnologias de acuerdo al proyecto en participación, titulado como Analista bla bla</p>
         </div>
     </div>
@@ -142,8 +143,8 @@
     <div class="row col-11 h-50 mx-auto">
 
         <div class="col text-center my-auto mx-auto">
-            <h3 class="col"><strong>tienes alguna idea en mente? :O</strong></h3>
-            <p class="col">Llena el formulario de contacto para que podamos trabajar juntos</p>
+            <h3 class="col"><strong th:text="${sectionForm}"></strong></h3>
+            <p class="col" th:text="${sectionFormTxt}"></p>
         </div>
 
         <div class="col text-center my-auto mx-auto">

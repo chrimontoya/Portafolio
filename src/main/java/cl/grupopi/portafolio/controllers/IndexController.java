@@ -4,11 +4,10 @@ import cl.grupopi.portafolio.models.Project;
 import cl.grupopi.portafolio.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,22 +20,36 @@ public class IndexController {
     @Value("${titulo.home}")
     private String homeTitle;
 
+    @Value("${titulo.portada}")
+    private String title;
+    @Value("${subtitulo.portada}")
+    private String subTitle;
+    @Value("${seccion.proyectos}")
+    private String sectionProjects;
+    @Value("${seccion.habilidades}")
+    private String sectionSkills;
+    @Value("${seccion.info}")
+    private String sectionInfo;
+    @Value("${seccion.form}")
+    private String sectionForm;
+    @Value("${seccion.form.txt}")
+    private String sectionFormTxt;
+
     @Autowired
     private ProjectService projectService;
 
     @GetMapping({"/index","","/home"})
     public String index(ModelMap modelMap){
 
-        List<String> navButtons = new ArrayList<>();
+        modelMap.addAttribute("title", title);
+        modelMap.addAttribute("subTitle", subTitle);
+        modelMap.addAttribute("sectionProjects", sectionProjects);
+        modelMap.addAttribute("sectionSkills", sectionSkills);
+        modelMap.addAttribute("sectionInfo", sectionInfo);
+        modelMap.addAttribute("sectionForm", sectionForm);
+        modelMap.addAttribute("sectionFormTxt", sectionFormTxt);
 
-        navButtons.add("Christian Montoya");
-        navButtons.add("Proyectos");
-        navButtons.add("Contacto");
-        navButtons.add("Acerca de");
 
-
-        modelMap.addAttribute("titulo", homeTitle);
-        modelMap.addAttribute("navButtons",navButtons);
         return "index";
     }
     @ModelAttribute("projects")
@@ -64,4 +77,9 @@ public class IndexController {
 
         return projectList;
     }
+
+/*    @ModelAttribute("contact")
+    public void sendContact(@PathVariable String name, @at){
+
+    }*/
 }
