@@ -147,17 +147,28 @@
             <p class="col" th:text="${sectionFormTxt}"></p>
         </div>
 
-        <div class="col text-center my-auto mx-auto">
+        <form class="col text-center my-auto mx-auto" >
 
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Nombre">
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <input class="col" placeholder="Nombre" name="name">
+                    <div class="col" th:if="${error != null && error.containsKey('name')}" th:text="${error.name}"></div>
+                </div>
 
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Correo">
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <input class="col" placeholder="Correo" name="email">
+                    <div class="col" th:if="${error != null && error.containsKey('email')}" th:text="${error.email}"></div>
+                </div>
 
-                <input class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded" placeholder="Mensaje">
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <input class="col" placeholder="Mensaje" name="message">
+                    <div class="col" th:if="${error != null && error.containsKey('message')}" th:text="${error.message}"></div>
+                </div>
 
-                <button class="col col-sm-8 col-md-8 col-lg-6 my-2 btn btn-primary">Enviar</button>
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <button class="col btn btn-primary" th:onclick="${test}">Enviar</button>
+                </div>
 
-        </div>
+        </form>
 
     </div>
 

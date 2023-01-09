@@ -2,11 +2,16 @@ package cl.grupopi.portafolio.models;
 
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotEmpty;
+
 @Component
 public class ContactForm {
 
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String message;
 
     public ContactForm(String name, String email, String message) {
