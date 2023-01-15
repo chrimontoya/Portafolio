@@ -9,6 +9,7 @@ public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_contact")
     private Long id;
     private String name;
     @Column(name = "last_name")
@@ -17,6 +18,7 @@ public class Contact implements Serializable {
     private String email;
     @Column(name = "phone_number")
     private String phoneNumber;
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createAt;
 

@@ -8,12 +8,13 @@ import java.util.Date;
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_project")
     private Long id;
     private String name;
     @Column(name = "name_business")
     private String nameBusiness;
     private String description;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_at")
     private Date creationAt;
 
