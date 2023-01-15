@@ -10,19 +10,19 @@ public class UserAuth implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user_auth")
-    private Long idUserAuth;
+    private Long id;
     private String username;
     private String password;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createAt;
 
-    public Long getIdUserAuth() {
-        return idUserAuth;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdUserAuth(Long idUserAuth) {
-        this.idUserAuth = idUserAuth;
+    public void setId(Long idUserAuth) {
+        this.id = idUserAuth;
     }
 
     public String getUsername() {
