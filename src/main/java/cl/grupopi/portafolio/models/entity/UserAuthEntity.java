@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 
-public class UserAuth implements Serializable {
+public class UserAuthEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user_auth")
