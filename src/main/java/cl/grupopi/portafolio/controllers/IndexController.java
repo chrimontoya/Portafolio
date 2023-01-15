@@ -1,11 +1,10 @@
 package cl.grupopi.portafolio.controllers;
 
 import cl.grupopi.portafolio.models.ContactForm;
-import cl.grupopi.portafolio.models.Project;
-import cl.grupopi.portafolio.services.ProjectService;
+import cl.grupopi.portafolio.models.dao.IProjectDao;
+import cl.grupopi.portafolio.models.entity.ProjectEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -35,9 +34,8 @@ public class IndexController {
     private String sectionForm;
     @Value("${seccion.form.txt}")
     private String sectionFormTxt;
-
     @Autowired
-    private ProjectService projectService;
+    private IProjectDao iProjectDao;
 
     @GetMapping({"/index","","/home"})
     public String index(ModelMap modelMap){
@@ -52,31 +50,6 @@ public class IndexController {
 
 
         return "index";
-    }
-    @ModelAttribute("projects")
-    public List<Project> getAll(){
-        List<Project> projectList = new ArrayList<Project>();
-
-        Project project = new Project();
-        Project project2 = new Project();
-
-        project.setIdProject(1);
-        project.setName("Cocinando para mi");
-        project.setDescription("Aplicaciøn que permite a usuarios a aprender a cocinar");
-        project.setName_business("Grupo PI");
-        project.setCreation_date(new Date());
-
-        projectList.add(project);
-
-        project2.setIdProject(2);
-        project2.setName("Automotora messi");
-        project2.setDescription("Autos de messi");
-        project2.setName_business("Grupo PI");
-        project2.setCreation_date(new Date());
-
-        projectList.add(project2);
-
-        return projectList;
     }
 
     @PostMapping("/contact")
@@ -107,5 +80,12 @@ public class IndexController {
     @ModelAttribute("test")
     public void test(){
         System.out.println("xd");
+    }
+
+    @ModelAttribute("projects")
+    public List<ProjectEntity> getAllProjects(){
+        List<ProjectEntity> projectEntities;
+        projectEntities = iProjectDao.getAll();
+        return projectEntities;
     }
 }

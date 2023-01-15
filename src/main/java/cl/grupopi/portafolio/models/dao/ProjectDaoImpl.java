@@ -1,6 +1,6 @@
 package cl.grupopi.portafolio.models.dao;
 
-import cl.grupopi.portafolio.models.Project;
+import cl.grupopi.portafolio.models.entity.ProjectEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +15,13 @@ public class ProjectDaoImpl implements IProjectDao{
 
     @Transactional(readOnly = true)
     @Override
-    public List getAll() {
+    public List<ProjectEntity> getAll() {
         return entityManager.createQuery("FROM ProjectEntity").getResultList();
     }
     @Transactional(readOnly = true)
     @Override
-    public Project getById(Long id) {
-        return (Project) entityManager.createQuery("FROM ProjectEntity WHERE id ==" + id).getResultList();
+    public ProjectEntity getById(Long id) {
+        return (ProjectEntity) entityManager.createQuery("FROM ProjectEntity WHERE id ==" + id).getResultList();
     }
 
     @Override
