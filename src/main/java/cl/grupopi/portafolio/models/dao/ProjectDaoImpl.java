@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class ProjectDaoImpl implements IProjectDao{
+public class ProjectDaoImpl implements ICrudDao <ProjectEntity>{
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -23,19 +23,19 @@ public class ProjectDaoImpl implements IProjectDao{
     public ProjectEntity getById(Long id) {
         return (ProjectEntity) entityManager.createQuery("FROM ProjectEntity WHERE id ==" + id).getResultList();
     }
-
+    @Transactional
     @Override
-    public void create() {
-
+    public void create(ProjectEntity projectEntity) {
+        entityManager.persist(projectEntity);
     }
-
+    @Transactional
     @Override
-    public void update() {
-
+    public void update(ProjectEntity projectEntity) {
+        entityManager.merge(projectEntity);
     }
-
+    @Transactional
     @Override
-    public void delete() {
-
+    public void delete(ProjectEntity projectEntity) {
+        entityManager.remove(projectEntity);
     }
 }

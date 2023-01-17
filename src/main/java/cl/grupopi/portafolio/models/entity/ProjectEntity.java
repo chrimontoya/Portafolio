@@ -18,7 +18,6 @@ public class ProjectEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_at")
     private Date creationAt;
-
     public Long getId() {
         return id;
     }
