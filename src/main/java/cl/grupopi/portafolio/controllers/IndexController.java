@@ -7,9 +7,14 @@ import cl.grupopi.portafolio.models.entity.ProjectEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -39,8 +44,7 @@ public class IndexController {
     private ContactDaoImpl contactDaoImpl;
 
     @GetMapping({"/index","","/home"})
-    public String index(ModelMap modelMap){
-
+    public String index(ModelMap modelMap, ContactEntity contactEntity, RedirectView redirectView){
         modelMap.addAttribute("title", title);
         modelMap.addAttribute("subTitle", subTitle);
         modelMap.addAttribute("sectionProjects", sectionProjects);
@@ -48,7 +52,7 @@ public class IndexController {
         modelMap.addAttribute("sectionInfo", sectionInfo);
         modelMap.addAttribute("sectionForm", sectionForm);
         modelMap.addAttribute("sectionFormTxt", sectionFormTxt);
-
+        modelMap.addAttribute("prueba", getAllProjects());
 
         return "index";
     }
@@ -78,9 +82,26 @@ public class IndexController {
 //        return "responseForm";
 //    }
 
-    @ModelAttribute("test")
-    public void test(ContactEntity contactEntity){
-        System.out.println("xd" + contactEntity.getName());
+    @PostMapping("/form")
+    public RedirectView addContact(@Valid ContactEntity contactEntity, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setContextRelative(true);
+        redirectView.setUrl("index");
+        if(!bindingResult.hasErrors()){
+            contactDaoImpl.create(contactEntity);
+            model.addAttribute("contact",contactEntity);
+            redirectAttributes.addFlashAttribute("contact",contactEntity.getName());
+            return redirectView;
+        }else{
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(err -> {
+                errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
+            });
+            redirectAttributes.addFlashAttribute("error",errors);
+            return redirectView;
+        }
+
     }
 
     //CRUD PROJECTS
@@ -90,31 +111,4 @@ public class IndexController {
         projectEntities = projectDaoImpl.getAll();
         return projectEntities;
     }
-    @ModelAttribute("getProject")
-    public ProjectEntity getProject(Long id_project){
-        ProjectEntity projectEntities = projectDaoImpl.getById(id_project);
-        return projectEntities;
-    }
-    @ModelAttribute("addProject")
-    public void createProject(ProjectEntity project){
-        projectDaoImpl.create(project);
-    }
-    @ModelAttribute("updateProject")
-    public void updateProject(ProjectEntity project){
-        projectDaoImpl.update(project);
-    }
-    @ModelAttribute("deleteProject")
-    public void deleteProject(ProjectEntity project){
-        projectDaoImpl.delete(project);
-    }
-
-    //CREATE CONTACT
-    @ModelAttribute("addContact")
-    public void createContact(ContactEntity contactEntity){
-        contactDaoImpl.create(contactEntity);
-    }
-
-
-
-
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -21,7 +22,8 @@ public class ProjectDaoImpl implements ICrudDao <ProjectEntity>{
     @Transactional(readOnly = true)
     @Override
     public ProjectEntity getById(Long id) {
-        return (ProjectEntity) entityManager.createQuery("FROM ProjectEntity WHERE id ==" + id).getResultList();
+        TypedQuery<ProjectEntity> query = entityManager.createQuery("FROM ProjectEntity WHERE id =" + id, ProjectEntity.class);
+        return query.getSingleResult();
     }
     @Transactional
     @Override

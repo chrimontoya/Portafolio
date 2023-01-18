@@ -9,7 +9,10 @@
     <script th:src="@{/js/functions.js}" type="text/javascript"></script>
 </head>
 <body>
-
+    <div class="alert alert-success" role="alert" th:if="${contact}" th:text="${'Gracias por contactarte con nosotros ' + contact.getName() + ' pronto recibiras un mensaje :)'}">
+    </div>
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${'Hubo un error al enviar el formulario'}">
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">Christian</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +62,7 @@
         <div class="container m-5 col-12">
 
             <div class="row justify-content-center">
-                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2" th:each="project : ${projects}">
+                <div class="col-10 col-sm-6 col-md-4 col-lg-3 text-center text-center m-2" th:if="${projects != null}" th:each="project : ${projects}">
                     <div class="card">
                         <img class="card-img-top" th:src="@{/images/bg-home.jpg}" alt="Card image cap">
                         <div class="card-body">
@@ -129,28 +132,39 @@
             <p class="col" th:text="${sectionFormTxt}"></p>
         </div>
 
-        <form class="col text-center my-auto mx-auto" >
+            <form class="col text-center my-auto mx-auto" th:method="post" th:action="@{/app/form}">
 
                 <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
-                    <input class="col" placeholder="Nombre" name="name">
-                    <div class="col" th:if="${error != null && error.containsKey('name')}" th:text="${error.name}"></div>
+                    <input class="col form-control" placeholder="Nombre" name="name">
+                    <small class="form-text text-danger" th:if="${error != null && error.containsKey('name')}" th:text="${error.name}"></small>
                 </div>
 
                 <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
-                    <input class="col" placeholder="Correo" name="email">
-                    <div class="col" th:if="${error != null && error.containsKey('email')}" th:text="${error.email}"></div>
+                    <input class="col form-control" placeholder="Apellido" name="lastName">
                 </div>
 
                 <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
-                    <input class="col" placeholder="Mensaje" name="message">
-                    <div class="col" th:if="${error != null && error.containsKey('message')}" th:text="${error.message}"></div>
+                    <input class="col form-control" placeholder="Correo" name="email">
+                    <small class="form-text text-danger" th:if="${error != null && error.containsKey('email')}" th:text="${error.email}"></small>
                 </div>
 
                 <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
-                    <button class="col btn btn-primary" th:onclick="${test}">Enviar</button>
+                    <input class="col form-control" placeholder="Teléfono" name="phoneNumber">
+                    <small class="form-text text-danger" th:if="${error != null && error.containsKey('phoneNumber')}" th:text="${error.phoneNumber}"></small>
                 </div>
 
-        </form>
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <input class="col form-control" placeholder="Mensaje" name="description">
+                    <small class="form-text text-danger" th:if="${error != null && error.containsKey('description')}" th:text="${error.description}"></small>
+                </div>
+
+                <div class="col col-sm-8 col-md-8 col-lg-6 my-2 p-2 rounded">
+                    <button class="col btn btn-primary" type="submit">Enviar</button>
+                </div>
+
+            </form>
+
+
 
     </div>
 

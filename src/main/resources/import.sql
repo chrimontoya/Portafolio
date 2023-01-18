@@ -1,2 +1,0 @@
-INSERT INTO Project (id_project, name, name_business, description, creation_at) VALUES (1, 'DGA', 'Calidad del agua', 'Proyecto gubernamental que busca medir la calidad de agua en distintas regiones del pais',CURRENT_TIMESTAMP);
-INSERT INTO Project (id_project, name, name_business, description, creation_at) VALUES (2, 'DGA', 'Calidad del agua', 'Proyecto gubernamental que busca medir la calidad de agua en distintas regiones del pais',CURRENT_TIMESTAMP);

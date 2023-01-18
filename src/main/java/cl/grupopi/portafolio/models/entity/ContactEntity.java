@@ -1,6 +1,10 @@
 package cl.grupopi.portafolio.models.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,12 +15,19 @@ public class ContactEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_contact")
     private Long id;
+    @NotEmpty
     private String name;
     @Column(name = "last_name")
     private String lastName;
+    @NotEmpty
+    @Column(name = "description")
     private String description;
+    @NotEmpty
+    @Email
     private String email;
+    @NotNull
     @Column(name = "phone_number")
+    @Size(max = 9)
     private String phoneNumber;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
