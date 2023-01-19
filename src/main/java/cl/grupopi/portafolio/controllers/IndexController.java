@@ -90,8 +90,8 @@ public class IndexController {
         redirectView.setUrl("index");
         if(!bindingResult.hasErrors()){
             contactDaoImpl.create(contactEntity);
-            model.addAttribute("contact",contactEntity);
-            redirectAttributes.addFlashAttribute("contact",contactEntity.getName());
+    /*        model.addAttribute("contact",contactEntity);*/
+            redirectAttributes.addFlashAttribute("contact",contactEntity);
             return redirectView;
         }else{
             Map<String, String> errors = new HashMap<>();
