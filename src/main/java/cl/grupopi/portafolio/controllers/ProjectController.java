@@ -1,56 +1,30 @@
 package cl.grupopi.portafolio.controllers;
 
-import cl.grupopi.portafolio.models.dao.ProjectDaoImpl;
-import cl.grupopi.portafolio.models.entity.ProjectEntity;
+import cl.grupopi.portafolio.models.entity.Project;
+import cl.grupopi.portafolio.services.project.ProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
-@Controller
-@RequestMapping("/app/projects")
+@RestController
+@RequestMapping("/api/v1/projects")
 public class ProjectController {
-
     @Autowired
-    private ProjectDaoImpl projectDaoImpl;
-
+    private ProjectServiceImpl projectServiceImpl;
+    @PostMapping("")
+    public void create(@RequestBody Project project){
+        projectServiceImpl.save(project);
+    }
     @GetMapping("")
-    public String index(Model model){
-        return "project";
+    public Iterable<Project> getAll(){
+        return projectServiceImpl.findAll();
     }
-
-    @PostMapping("/agregar")
-    public RedirectView addProject(@Valid ProjectEntity projectEntity, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        RedirectView redirectView = new RedirectView();
-        redirectView.setContextRelative(true);
-        redirectView.setUrl("");
-        if(!bindingResult.hasErrors()){
-            projectEntity.setCreationAt(new Date());
-            projectDaoImpl.create(projectEntity);
-            return redirectView;
-        }else{
-            Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(err -> {
-                errors.put(err.getField(),"El campo " + err.getField() + err.getDefaultMessage());
-            });
-            return redirectView;
-        }
-    }
-
-    @ModelAttribute("projects")
-    public List<ProjectEntity> getAll(){
-        List<ProjectEntity> projectEntityList;
-        projectEntityList = projectDaoImpl.getAll();
-        return projectEntityList;
+    @GetMapping("/{id}")
+    public Optional<Project> findById(@PathVariable Long id){ return projectServiceImpl.findById(id); }
+    @DeleteMapping("/{id}")
+    public void delete(@RequestBody Project project){
+        projectServiceImpl.delete(project);
     }
 
 }

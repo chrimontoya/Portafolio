@@ -1,11 +1,6 @@
 package cl.grupopi.portafolio.models.dao;
 
-import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+public interface ICrudDao extends CrudRepository {
 
-public interface ICrudDao <T> {
-    List<T> getAll();
-    T getById(Long id);
-    void create(T t);
-    void update(T t);
-    void delete(T t);
 }
