@@ -12,7 +12,6 @@ import java.util.Optional;
 public class ContactController {
     @Autowired
     private ContactServiceImpl contactService;
-
     @PostMapping("")
     public void create(@RequestBody Contact contact){
         contactService.save(contact);
