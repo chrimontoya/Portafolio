@@ -28,7 +28,7 @@ public class JpaUserDetailsServices implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserAuth userAuth = userDetailsDao.findUserAuthByUsername(username);
-
+        System.out.println(userAuth);
         if(userAuth == null){
             logger.error("Error login: no existe usuario ${userAuth}");
         }

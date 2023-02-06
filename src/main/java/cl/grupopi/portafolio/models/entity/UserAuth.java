@@ -17,7 +17,7 @@ public class UserAuth implements Serializable {
     private String password;
     private Boolean enabled;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_role")
+    @JoinColumn(name = "id_user_auth")
     private List<Role> roles;
     public UserAuth() {
 
