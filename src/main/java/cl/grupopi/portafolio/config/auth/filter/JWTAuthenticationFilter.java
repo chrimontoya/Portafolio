@@ -73,10 +73,22 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("token",token);
         body.put("user",usuario);
-        body.put("mensaje","PORFIN CONXETUMARE");
+        body.put("messages","User authenticated");
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(200);
+        response.setContentType("application/json");
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Map<String, Object> body = new HashMap<String, Object>();
+        body.put("status","error");
+        body.put("code","401");
+        body.put("messages","User or password incorrect");
+
+        response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+        response.setStatus(401);
         response.setContentType("application/json");
     }
 }
