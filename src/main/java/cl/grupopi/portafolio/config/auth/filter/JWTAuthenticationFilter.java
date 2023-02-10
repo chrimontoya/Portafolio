@@ -1,30 +1,16 @@
 package cl.grupopi.portafolio.config.auth.filter;
 
+import cl.grupopi.portafolio.config.auth.filter.service.IJwtService;
 import cl.grupopi.portafolio.models.entity.UserAuth;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;;
 
@@ -33,11 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     private AuthenticationManager authenticationManager;
+    private IJwtService jwtService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, IJwtService jwtService) {
         this.authenticationManager = authenticationManager;
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/v1/login","POST"));
+
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -58,21 +47,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        User usuario = (User) authResult.getPrincipal();
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
 
-        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
-        String token = Jwts.builder()
-                .setSubject(usuario.getUsername())
-                .signWith(secretKey)
-                .compact();
-
-        response.addHeader("Authorization","Bearer " + token);
+        System.out.println("ok");
+        String token = jwtService.create(authResult);
+        response.addHeader("Authorization","Bearer" + token);
 
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("token",token);
-        body.put("user",usuario);
+        body.put("user",authResult.getPrincipal());
         body.put("messages","User authenticated");
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
@@ -81,7 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("status","error");
         body.put("code","401");
@@ -91,4 +74,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setStatus(401);
         response.setContentType("application/json");
     }
+
+
 }

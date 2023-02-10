@@ -3,6 +3,7 @@ package cl.grupopi.portafolio.controllers;
 import cl.grupopi.portafolio.models.entity.Contact;
 import cl.grupopi.portafolio.services.contact.ContactServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ public class ContactController {
     public void create(@RequestBody Contact contact){
         contactService.save(contact);
     }
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @GetMapping("")
     public Iterable<Contact> getAll(){
         return contactService.findAll();

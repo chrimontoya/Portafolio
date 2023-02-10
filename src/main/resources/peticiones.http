@@ -1,8 +1,12 @@
+GET http://localhost:8000/api/v1/contacts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn0se1wiYXV0aG9yaXR5XCI6XCJST0xFX0RFVkVMT1BFUlwifSx7XCJhdXRob3JpdHlcIjpcIlJPTEVfVVNFUlwifV0iLCJzdWIiOiJjaHJpc3RpYW4ifQ.8zMo2hvsRYirXf2IV17_28rFGXCGWcDh5aJia-Ao4a0
+
+###
 #login
-POST http://localhost:8000/login
+POST http://localhost:8000/api/v1/login
 Content-Type: application/json
 
 {
   "username": "christian",
-  "password": 12341231
+  "password": 1234
 }

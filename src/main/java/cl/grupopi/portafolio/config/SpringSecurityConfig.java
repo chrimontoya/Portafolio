@@ -1,6 +1,8 @@
 package cl.grupopi.portafolio.config;
 
 import cl.grupopi.portafolio.config.auth.filter.JWTAuthenticationFilter;
+import cl.grupopi.portafolio.config.auth.filter.JWTAuthorizacionFilter;
+import cl.grupopi.portafolio.config.auth.filter.service.IJwtService;
 import cl.grupopi.portafolio.services.jpaServices.JpaUserDetailsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,9 @@ public class SpringSecurityConfig {
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
 
+    @Autowired
+    private IJwtService jwtService;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         System.out.println(new BCryptPasswordEncoder().encode("1234"));
@@ -31,10 +36,12 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/h2-console/**", "/login/**").permitAll()
-                        .anyRequest().authenticated()
+                        .antMatchers("/h2-console/**", "/api/v1/login").permitAll()
+                        .antMatchers("/api/v1/contacts/**").authenticated()
+                        .antMatchers("/api/v1/projects/**").authenticated()
                 )
-                .addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(),jwtService))
+                .addFilter(new JWTAuthorizacionFilter(authenticationConfiguration.getAuthenticationManager(), jwtService))
                 .csrf().disable()
                 .headers().frameOptions().disable().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

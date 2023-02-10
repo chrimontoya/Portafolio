@@ -1,18 +1,50 @@
 package cl.grupopi.portafolio.config.auth.filter;
 
-import org.springframework.context.annotation.Configuration;
+import cl.grupopi.portafolio.config.auth.filter.service.IJwtService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-@Configuration
-public class JWTAuthorizacionFilter {
-/*    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String bearerToken = request.getHeader("Authorization");
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-        if(bearerToken != null && bearerToken.startsWith("Bearer ")){
-            String token = bearerToken.replace("Bearer","");
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = TokensUtils.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+public class JWTAuthorizacionFilter extends BasicAuthenticationFilter {
+    private IJwtService jwtService;
+    public JWTAuthorizacionFilter(AuthenticationManager authenticationManager, IJwtService jwtService) {
+        super(authenticationManager);
+        this.jwtService = jwtService;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        super.doFilterInternal(request, response, chain);
+
+        String header = request.getHeader("Authorization");
+
+        if(!requiresAuthentication(header)){
+            chain.doFilter(request, response);
+            return;
         }
-        filterChain.doFilter(request, response);
-    }*/
+
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+
+        if (jwtService.validate(header)){
+            authenticationToken = new UsernamePasswordAuthenticationToken(jwtService.getUsername(header), jwtService.getClaims(header), jwtService.getRoles(header));
+            System.out.println(authenticationToken.getPrincipal() + "" + authenticationToken.getCredentials());
+            System.out.println(authenticationToken.isAuthenticated());
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        chain.doFilter(request, response);
+    }
+    protected boolean requiresAuthentication(String header) {
+        if (header == null || !header.startsWith("Bearer ")) {
+            return false;
+        }
+        return true;
+    }
 }

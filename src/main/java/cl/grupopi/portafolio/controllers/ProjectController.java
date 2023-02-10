@@ -3,6 +3,7 @@ package cl.grupopi.portafolio.controllers;
 import cl.grupopi.portafolio.models.entity.Project;
 import cl.grupopi.portafolio.services.project.ProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class ProjectController {
         projectServiceImpl.save(project);
     }
     @GetMapping("")
+    @Secured({"ROLE_ADMIN"})
     public Iterable<Project> getAll(){
         return projectServiceImpl.findAll();
     }
