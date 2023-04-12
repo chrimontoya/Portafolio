@@ -35,6 +35,7 @@ public class JWTAuthorizacionFilter extends BasicAuthenticationFilter {
             authenticationToken = new UsernamePasswordAuthenticationToken(jwtService.getUsername(header), jwtService.getClaims(header), jwtService.getRoles(header));
             System.out.println(authenticationToken.getPrincipal() + "" + authenticationToken.getCredentials());
             System.out.println(authenticationToken.isAuthenticated());
+            response.setStatus(200);
         }
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -46,4 +47,8 @@ public class JWTAuthorizacionFilter extends BasicAuthenticationFilter {
         }
         return true;
     }
+
+
+
+
 }
